@@ -3,19 +3,23 @@ import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
+import { getUser } from "~/utils/session.server";
 
 type LoaderData = {
+  user: Awaited<ReturnType<typeof getUser>>;
   postListItems: Array<Pick<Post, "id" | "name">>;
 };
 
-export const loader: LoaderFunction = async () => {
-  const data: LoaderData = {
-    postListItems: await db.post.findMany({
-      take: 5,
-      select: { id: true, name: true },
-      orderBy: { createdAt: "desc" },
-    }),
-  };
+export const loader: LoaderFunction = async ({ request }) => {
+  const postListItems = await db.post.findMany({
+    take: 5,
+    select: { id: true, name: true },
+    orderBy: { createdAt: "desc" },
+  });
+
+  const user = await getUser(request);
+
+  const data: LoaderData = { postListItems, user };
 
   return json(data);
 };
@@ -27,7 +31,21 @@ export default function PostsRoute() {
     <div>
       <Link to="/">Home</Link>
 
+      {data.user ? (
+        <div className="">
+          <span>{`Hi ${data.user.username}`}</span>
+          <form action="/logout" method="post">
+            <button type="submit" className="button">
+              Logout
+            </button>
+          </form>
+        </div>
+      ) : (
+        <Link to="/login">Login</Link>
+      )}
+
       <h1>Posts</h1>
+
       <main>
         <p>List of posts:</p>
         <ul>
