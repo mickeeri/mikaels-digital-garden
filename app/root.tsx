@@ -1,14 +1,14 @@
-import { LiveReload } from "@remix-run/react";
+import { LiveReload, Outlet } from "@remix-run/react";
 
 export default function App() {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <title>Remix: So great, it's funny!</title>
+        <title>Mikaels Digital Garden</title>
       </head>
       <body>
-        Hello world
+        <Outlet />
         <LiveReload />
       </body>
     </html>
