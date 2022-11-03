@@ -1,6 +1,18 @@
-import type { MetaFunction } from "@remix-run/node";
-import { LiveReload, Meta, Outlet, Scripts, useCatch } from "@remix-run/react";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  useCatch,
+} from "@remix-run/react";
 import React from "react";
+import styles from "./styles/app.css";
+
+export const links: LinksFunction = () => {
+  return [{ rel: "stylesheet", href: styles }];
+};
 
 export const meta: MetaFunction = () => {
   const description = `This is my own secret garden`;
@@ -30,6 +42,7 @@ const Document = ({
       <head>
         <Meta />
         <title>{title}</title>
+        <Links />
       </head>
       <body>
         {children}

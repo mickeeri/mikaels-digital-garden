@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => ({
 export default function IndexRoute() {
   return (
     <div>
-      <h1>Hello Index Route</h1>
+      <h1 className="">Hello Index Route</h1>
 
       <nav>
         <ul>
