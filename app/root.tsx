@@ -1,5 +1,22 @@
-import { LiveReload, Outlet, useCatch } from "@remix-run/react";
+import type { MetaFunction } from "@remix-run/node";
+import { LiveReload, Meta, Outlet, useCatch } from "@remix-run/react";
 import React from "react";
+
+export const meta: MetaFunction = () => {
+  const description = `This is my own secret garden`;
+
+  return {
+    charset: "utf-8",
+    description,
+    keywords: "",
+    "twitter:image": "",
+    "twitter:card": "",
+    "twitter:creator": "",
+    "twitter:site": "",
+    "twitter:title": "Mikael's Digital Garden",
+    "twitter:description": description,
+  };
+};
 
 const Document = ({
   children,
@@ -11,7 +28,7 @@ const Document = ({
   return (
     <html lang="en">
       <head>
-        <meta charSet="utf-8" />
+        <Meta />
         <title>{title}</title>
       </head>
       <body>

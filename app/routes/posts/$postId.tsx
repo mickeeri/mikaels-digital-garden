@@ -1,10 +1,28 @@
 import type { Post } from "@prisma/client";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useCatch, useLoaderData, useParams } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 import { getUserId, requireUserId } from "~/utils/session.server";
+
+export const meta: MetaFunction = ({
+  data,
+}: {
+  data: LoaderData | undefined;
+}) => {
+  if (!data) {
+    return { title: "No post", description: "No post found" };
+  }
+  return {
+    title: `"${data.post.name}" post`,
+    description: `Enjoy the "${data.post.name}" post and much more`,
+  };
+};
 
 type LoaderData = { post: Post; isOwner: boolean };
 

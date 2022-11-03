@@ -1,9 +1,16 @@
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useActionData, Link, useSearchParams } from "@remix-run/react";
 
 import { db } from "~/utils/db.server";
 import { createUserSession, login, register } from "~/utils/session.server";
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Mikael's Digital Garden | Login",
+    description: "Login on this page",
+  };
+};
 
 function validateUsername(username: unknown) {
   if (typeof username !== "string" || username.length < 3) {
