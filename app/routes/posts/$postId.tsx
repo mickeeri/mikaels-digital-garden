@@ -1,7 +1,7 @@
 import type { Post } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useParams } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 
 type LoaderData = { post: Post };
@@ -30,5 +30,13 @@ export default function PostRoute() {
 
       <Link to=".">{data.post.name} Permalink</Link>
     </div>
+  );
+}
+
+export function ErrorBoundary() {
+  const { postId } = useParams();
+
+  return (
+    <div className="">{`There was an error loading post by the id ${postId}. Sorry.`}</div>
   );
 }

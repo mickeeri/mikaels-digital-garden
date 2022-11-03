@@ -117,3 +117,9 @@ export default function NewPostRoute() {
     </div>
   );
 }
+
+export function ErrorBoundary() {
+  return (
+    <div className="">Something unexpected went wrong. Sorry about that.</div>
+  );
+}

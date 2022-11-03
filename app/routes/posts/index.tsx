@@ -28,3 +28,9 @@ export default function PostsIndexRoute() {
     </div>
   );
 }
+
+export function ErrorBoundary() {
+  return (
+    <div className="">Something went wrong trying to load random post.</div>
+  );
+}
