@@ -1,7 +1,14 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { Form, Link, useActionData, useCatch } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  useActionData,
+  useCatch,
+  useTransition,
+} from "@remix-run/react";
+import { PostDisplay } from "~/components/post";
 import { db } from "~/utils/db.server";
 import { getUserId, requireUserId } from "~/utils/session.server";
 
@@ -68,6 +75,27 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function NewPostRoute() {
   const actionData = useActionData<ActionData>();
+  const transition = useTransition();
+
+  if (transition.submission) {
+    const name = transition.submission.formData.get("name");
+    const content = transition.submission.formData.get("content");
+
+    if (
+      typeof name === "string" &&
+      typeof content === "string" &&
+      !validatePostContent(content) &&
+      !validatePostName(name)
+    ) {
+      return (
+        <PostDisplay
+          post={{ name, content }}
+          isOwner={true}
+          canDelete={false}
+        />
+      );
+    }
+  }
 
   return (
     <div>

@@ -6,13 +6,8 @@ import type {
 } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import {
-  Form,
-  Link,
-  useCatch,
-  useLoaderData,
-  useParams,
-} from "@remix-run/react";
+import { useCatch, useLoaderData, useParams } from "@remix-run/react";
+import { PostDisplay } from "~/components/post";
 import { db } from "~/utils/db.server";
 import { getUserId, requireUserId } from "~/utils/session.server";
 
@@ -74,23 +69,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function PostRoute() {
   const data = useLoaderData<LoaderData>();
 
-  return (
-    <div>
-      <p>Here's your post:</p>
-
-      <p>{data.post.content}</p>
-
-      <Link to=".">{data.post.name} Permalink</Link>
-      {data.isOwner ? (
-        <Form method="post">
-          <input type="hidden" name="_method" value="delete" />
-          <button type="submit" className="button">
-            Delete
-          </button>
-        </Form>
-      ) : null}
-    </div>
-  );
+  return <PostDisplay post={data.post} isOwner={data.isOwner} />;
 }
 
 export function CatchBoundary() {
