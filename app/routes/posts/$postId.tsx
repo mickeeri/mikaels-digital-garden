@@ -6,7 +6,13 @@ import type {
 } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useCatch, useLoaderData, useParams } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  useCatch,
+  useLoaderData,
+  useParams,
+} from "@remix-run/react";
 import { db } from "~/utils/db.server";
 import { getUserId, requireUserId } from "~/utils/session.server";
 
@@ -76,12 +82,12 @@ export default function PostRoute() {
 
       <Link to=".">{data.post.name} Permalink</Link>
       {data.isOwner ? (
-        <form method="post">
+        <Form method="post">
           <input type="hidden" name="_method" value="delete" />
           <button type="submit" className="button">
             Delete
           </button>
-        </form>
+        </Form>
       ) : null}
     </div>
   );

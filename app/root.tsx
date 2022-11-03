@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { LiveReload, Meta, Outlet, useCatch } from "@remix-run/react";
+import { LiveReload, Meta, Outlet, Scripts, useCatch } from "@remix-run/react";
 import React from "react";
 
 export const meta: MetaFunction = () => {
@@ -33,6 +33,7 @@ const Document = ({
       </head>
       <body>
         {children}
+        <Scripts />
         <LiveReload />
       </body>
     </html>
@@ -62,6 +63,8 @@ export function CatchBoundary() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
+  console.error(error);
+
   return (
     <Document title="Uh-oh!">
       <div className="">

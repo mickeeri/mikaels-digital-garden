@@ -1,7 +1,7 @@
 import type { Post } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import { Form, Link, Outlet, useLoaderData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 
@@ -34,11 +34,11 @@ export default function PostsRoute() {
       {data.user ? (
         <div className="">
           <span>{`Hi ${data.user.username}`}</span>
-          <form action="/logout" method="post">
+          <Form action="/logout" method="post">
             <button type="submit" className="button">
               Logout
             </button>
-          </form>
+          </Form>
         </div>
       ) : (
         <Link to="/login">Login</Link>
