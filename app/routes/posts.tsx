@@ -51,12 +51,16 @@ export default function PostsRoute() {
         <ul>
           {data.postListItems.map((post) => (
             <li key={post.id}>
-              <Link to={post.id}>{post.name}</Link>
+              <Link prefetch="intent" to={post.id}>
+                {post.name}
+              </Link>
             </li>
           ))}
         </ul>
 
-        <Link to="new">Add new post</Link>
+        <Link prefetch="intent" to="new">
+          Add new post
+        </Link>
 
         <Outlet />
       </main>

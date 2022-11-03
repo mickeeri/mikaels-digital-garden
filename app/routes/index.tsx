@@ -14,7 +14,9 @@ export default function IndexRoute() {
       <nav>
         <ul>
           <li>
-            <Link to="posts">All posts</Link>
+            <Link prefetch="intent" to="posts">
+              All posts
+            </Link>
           </li>
         </ul>
       </nav>
