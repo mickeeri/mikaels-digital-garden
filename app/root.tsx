@@ -1,4 +1,4 @@
-import { LiveReload, Outlet } from "@remix-run/react";
+import { LiveReload, Outlet, useCatch } from "@remix-run/react";
 import React from "react";
 
 const Document = ({
@@ -26,6 +26,20 @@ export default function App() {
   return (
     <Document>
       <Outlet />
+    </Document>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+
+  return (
+    <Document title={`${caught.status} ${caught.statusText}`}>
+      <div className="">
+        <h1>
+          {caught.status} {caught.statusText}
+        </h1>
+      </div>
     </Document>
   );
 }

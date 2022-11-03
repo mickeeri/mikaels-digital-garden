@@ -1,7 +1,7 @@
 import type { Post } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useLoaderData, useParams } from "@remix-run/react";
+import { Link, useCatch, useLoaderData, useParams } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 
 type LoaderData = { post: Post };
@@ -12,7 +12,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   });
 
   if (!post) {
-    throw new Error("Post not found");
+    throw new Response("Post not found", { status: 404 });
   }
 
   const data: LoaderData = { post };
@@ -31,6 +31,19 @@ export default function PostRoute() {
       <Link to=".">{data.post.name} Permalink</Link>
     </div>
   );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+  const params = useParams();
+
+  if (caught.status === 404) {
+    return (
+      <div className="">Couldn't find a post with id "{params.postId}"?</div>
+    );
+  }
+
+  throw new Error(`Unhandled error: ${caught.status}`);
 }
 
 export function ErrorBoundary() {

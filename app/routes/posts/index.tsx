@@ -1,7 +1,7 @@
 import type { Post } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useCatch, useLoaderData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 
 type LoaderData = { randomPost: Post };
@@ -13,6 +13,11 @@ export const loader: LoaderFunction = async () => {
     take: 1,
     skip: randomRowNumber,
   });
+
+  if (!randomPost) {
+    throw new Response("No random post found", { status: 404 });
+  }
+
   const data: LoaderData = { randomPost };
   return json(data);
 };
@@ -27,6 +32,15 @@ export default function PostsIndexRoute() {
       <Link to={data.randomPost.id}>"{data.randomPost.name}" Permalink</Link>
     </div>
   );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+
+  if (caught.status === 404) {
+    return <div className="">There are no post to display.</div>;
+  }
+  throw new Error(`Unexpected caught response with status: ${caught.status}`);
 }
 
 export function ErrorBoundary() {
