@@ -3,6 +3,10 @@ import { PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
 const db = new PrismaClient();
 
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 async function seed() {
   const user = await db.user.create({
     data: {
@@ -25,7 +29,7 @@ seed();
 
 function getPosts() {
   return [...Array(10).keys()].map(() => ({
-    name: faker.lorem.words(),
+    name: capitalizeFirstLetter(faker.lorem.words()),
     content: faker.lorem.paragraph(),
   }));
 }
