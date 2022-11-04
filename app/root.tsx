@@ -11,7 +11,25 @@ import React from "react";
 import styles from "./styles/app.css";
 
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    {
+      rel: "preconnect",
+      href: "https://fonts.googleapis.com",
+    },
+    {
+      rel: "preconnect",
+      href: "https://fonts.gstatic.com",
+      crossOrigin: "anonymous",
+    },
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Montserrat&display=swap",
+    },
+    {
+      rel: "stylesheet",
+      href: styles,
+    },
+  ];
 };
 
 export const meta: MetaFunction = () => {
@@ -19,6 +37,7 @@ export const meta: MetaFunction = () => {
 
   return {
     charset: "utf-8",
+    viewport: "width=device-width,initial-scale=1",
     description,
     keywords: "",
     "twitter:image": "",
@@ -44,7 +63,7 @@ const Document = ({
         <title>{title}</title>
         <Links />
       </head>
-      <body>
+      <body className="bg-amber-50 font-serif text-xl antialiased text-slate-700">
         {children}
         <Scripts />
         <LiveReload />

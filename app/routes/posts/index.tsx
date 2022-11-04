@@ -1,7 +1,8 @@
 import type { Post } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useCatch, useLoaderData } from "@remix-run/react";
+import { useCatch, useLoaderData } from "@remix-run/react";
+import { PostDisplay } from "~/components/post";
 import { db } from "~/utils/db.server";
 
 type LoaderData = { randomPost: Post };
@@ -25,13 +26,7 @@ export const loader: LoaderFunction = async () => {
 export default function PostsIndexRoute() {
   const data = useLoaderData<LoaderData>();
 
-  return (
-    <div>
-      <p>Here is a random post:</p>
-      <p>{data.randomPost.content}</p>
-      <Link to={data.randomPost.id}>"{data.randomPost.name}" Permalink</Link>
-    </div>
-  );
+  return <PostDisplay post={data.randomPost} isOwner={false} />;
 }
 
 export function CatchBoundary() {

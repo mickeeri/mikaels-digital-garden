@@ -12,9 +12,11 @@ export function PostDisplay({
 }) {
   return (
     <div>
-      <p>Here's your post:</p>
-      <p>{post.content}</p>
-      <Link to=".">{post.name} Permalink</Link>
+      <h1 className="text-2xl font-semibold">{post.name}</h1>
+      <p className="my-2">{post.content}</p>
+      <Link className="text-sky-500" to=".">
+        {post.name} Permalink
+      </Link>
       {isOwner ? (
         <Form method="post">
           <input type="hidden" name="_method" value="delete" />
